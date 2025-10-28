@@ -64,3 +64,26 @@ jobs:
             context: ./http-server
             tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
             push: ${{ github.ref == 'refs/heads/main' }}
+
+
+  test-backend:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build and test with Maven
+        run: mvn -B clean verify --file ./simple-api/pom.xml
+
+      - name: Analyze with SonarCloud
+        run: mvn -B verify sonar:sonar \
+          -Dsonar.projectKey=<ton_project_key> \
+          -Dsonar.organization=<ton_org_key> \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+          --file ./simple-api/pom.xml

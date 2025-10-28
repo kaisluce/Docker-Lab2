@@ -1,0 +1,14 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/proxy
+- name: Run HTTPD
+  community.docker.docker_container:
+    name: proxy
+    image: kaisluce/tp-devops-httpd
+    restart_policy: always
+    networks:
+      - name: app-network
+    published_ports:
+      - "80:80"
+  vars:
+    ansible_python_interpreter: /opt/docker_venv/bin/python

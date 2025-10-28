@@ -1,0 +1,17 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/app
+- name: Run backend container
+  community.docker.docker_container:
+    name: simple-api
+    image: kaisluce/tp-devops-simple-api  # ton image DockerHub
+    restart_policy: always
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_PASSWORD: password
+    networks:
+      - name: app-network
+    published_ports:
+      - "8080:8080"
+  vars:
+    ansible_python_interpreter: /opt/docker_venv/bin/python
