@@ -11,7 +11,5 @@
       DATABASE_PASSWORD: password
     networks:
       - name: app-network
-    published_ports:
-      - "8080:8080"
   vars:
     ansible_python_interpreter: /opt/docker_venv/bin/python
