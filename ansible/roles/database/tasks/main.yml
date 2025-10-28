@@ -5,14 +5,14 @@
   community.docker.docker_container:
     name: postgres
     image: kaisluce/tp-devops-database
-    restart_policy: always
+    pull: true
+    restart_policy: unless-stopped
     env:
-      POSTGRES_USER: usr
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: db
+      POSTGRES_USER: "{{POSTGRES_USER}}"
+      POSTGRES_PASSWORD: "{{POSTGRES_PASSWORD}}"
+      POSTGRES_DB: "{{POSTGRES_DB}}"
     networks:
       - name: app-network
     volumes:
       - db_data:/var/lib/postgresql/data
-  vars:
-    ansible_python_interpreter: /opt/docker_venv/bin/python
+  

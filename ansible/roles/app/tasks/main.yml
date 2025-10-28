@@ -4,12 +4,13 @@
 - name: Run backend container
   community.docker.docker_container:
     name: simple-api
-    image: kaisluce/tp-devops-simple-api  # ton image DockerHub
-    restart_policy: always
+    image: kaisluce/tp-devops-simple-api
+    pull: yes
+    restart_policy: on-failure
+    restart_retries: 3
     env:
-      DATABASE_HOST: postgres
-      DATABASE_PASSWORD: password
+      DATABASE_HOST: "{{DATABASE_HOST}}"
+      DATABASE_PASSWORD: "{{DATABASE_PASSWORD}}"
     networks:
       - name: app-network
-  vars:
-    ansible_python_interpreter: /opt/docker_venv/bin/python
+      - name: proxy-network

@@ -7,7 +7,7 @@
     image: kaisluce/tp-devops-httpd
     restart_policy: always
     networks:
-      - name: app-network
+      - name: proxy-network
     published_ports:
       - "80:80"
   vars:

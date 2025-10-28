@@ -5,3 +5,4 @@ all:
     prod:
       hosts:
         kais.luce-laurent.takima.cloud
+    ansible_python_interpreter: /opt/docker_venv/bin/python
